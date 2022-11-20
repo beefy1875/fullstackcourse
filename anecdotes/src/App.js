@@ -12,6 +12,7 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
+  const [maxVal, setMaxVal] = useState(0)
 
   const nextAnecdote = () => {
     const t = Math.floor(Math.random() * 7)
@@ -23,16 +24,29 @@ const App = () => {
   const vote = () => {
     const copy = [...points]
     copy[selected] += 1
+    let current = 0
+    let location = 0
+    for (let i=0; i < 7; i++) {
+      if (copy[i] > current) {
+        current = copy[i]
+        location = i
+      }
+    }
+    setMaxVal(location)
     setPoints(copy)
   }
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       {anecdotes[selected]}
       <br></br>
       <p>has {points[selected]} votes</p>
       <button onClick={() => vote()}>vote</button> 
       <button onClick={() => nextAnecdote()}>next anecdote</button>
+      <h1>Anecdote with most votes</h1>
+      <p>{anecdotes[maxVal]}</p>
+      <p>has {points[maxVal]} votes</p>
     </div>
   )
 }
