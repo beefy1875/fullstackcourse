@@ -18,10 +18,20 @@ const App = () => {
     setSelected(t)
   }
 
+  const [points, setPoints] = useState([0,0,0,0,0,0,0])
+
+  const vote = () => {
+    const copy = [...points]
+    copy[selected] += 1
+    setPoints(copy)
+  }
+
   return (
     <div>
       {anecdotes[selected]}
       <br></br>
+      <p>has {points[selected]} votes</p>
+      <button onClick={() => vote()}>vote</button> 
       <button onClick={() => nextAnecdote()}>next anecdote</button>
     </div>
   )
